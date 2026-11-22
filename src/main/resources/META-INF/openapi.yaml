@@ -1,0 +1,78 @@
+
+openapi: 3.1.0
+
+info:
+  title: Eclipse JNoSQL Product Catalog API
+  version: 1.0.0
+  description: >
+    REST API generated from Jakarta Data repositories
+    using Eclipse JNoSQL and Open Liberty.
+
+tags:
+  - name: Products
+    description: Product catalog management and search.
+
+components:
+  schemas:
+    ProductDTO:
+      description: >
+        Public product representation.
+        Internal supplier and commercial information
+        is intentionally excluded.
+      properties:
+        id:
+          description: Unique product identifier.
+        name:
+          description: Display name of the product.
+        description:
+          description: Product description and main features.
+        category:
+          description: Category used to classify the product.
+        price:
+          description: Retail selling price of the product.
+        manufacturer:
+          description: Public information about the manufacturer.
+
+    ProductCreateRequest:
+      description: >
+        Request for creating a catalog product,
+        including internal commercial information.
+      properties:
+        name:
+          description: Display name of the new product.
+        description:
+          description: Product description and main features.
+        category:
+          description: Category assigned to the product.
+        price:
+          description: Retail selling price of the product.
+        manufacturer:
+          description: Manufacturer information.
+        supplier:
+          description: Internal supplier information.
+        supplierCost:
+          description: >
+            Acquisition cost paid to the supplier.
+            Not exposed in public product responses.
+        internalNotes:
+          description: >
+            Internal business notes.
+            Not exposed in public product responses.
+
+    ManufacturerDTO:
+      description: Public manufacturer information.
+      properties:
+        name:
+          description: Business name of the manufacturer.
+        country:
+          description: Country where the manufacturer is based.
+
+    SupplierDTO:
+      description: Internal supplier information.
+      properties:
+        name:
+          description: Business name of the supplier.
+        accountManager:
+          description: Supplier's commercial contact.
+        contractReference:
+          description: Internal supplier contract reference.
