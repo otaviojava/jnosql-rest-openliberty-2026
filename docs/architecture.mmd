@@ -1,0 +1,12 @@
+flowchart LR
+    Client([HTTP client]) --> Resource
+
+    subgraph Liberty[Open Liberty]
+        Resource["ProductRepositoryResource<br/>(generated)"]
+        Mapper["ProductDTOMapper<br/>(generated, MapStruct)"]
+        Repo["ProductRepository<br/>(Jakarta Data)"]
+        Resource --> Mapper
+        Resource --> Repo
+    end
+
+    Repo --> DB[(Oracle NoSQL)]
