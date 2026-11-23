@@ -7,6 +7,7 @@ import jakarta.data.repository.Find;
 import jakarta.data.repository.Insert;
 import jakarta.data.repository.OrderBy;
 import jakarta.data.repository.Repository;
+import jakarta.data.restrict.Restriction;
 import jakarta.ws.rs.Path;
 import org.eclipse.jnosql.rest.RestDTO;
 import org.eclipse.jnosql.rest.RestRepository;
@@ -15,15 +16,16 @@ import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 @RestRepository(path = "/products")
-@RestDTO(exclude = {
+@RestDTO(excludeFromResponse = {
         "supplier",
         "supplierCost",
         "internalNotes"
-})
+}, excludeFromRequest = {"id"})
 @Tag(
         name = "Products",
         description = "Product catalog management and search"
@@ -74,4 +76,13 @@ public interface ProductRepository {
     )
     @Path("")
     Page<Product> findAll(PageRequest pageRequest);
+
+
+    @Operation(
+            summary = "search products",
+            description = "retrieves products based on the given restriction."
+    )
+    @Path("search")
+    @Find
+    List<Product> search(Restriction<Product> restriction);
 }
